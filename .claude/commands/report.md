@@ -61,18 +61,18 @@
 
 ### 第四步：收集 Git 数据
 
-对每个用户执行 git log 命令：
+对每个用户执行 git log 命令，**必须添加 `--all` 参数以检索所有分支的提交记录**：
 
 #### 精简版
 
 ```bash
-git log --author="<username>" --after="<start_date>" --before="<end_date>" --format='%H|%ai|%s' --shortstat
+git log --all --author="<username>" --after="<start_date>" --before="<end_date>" --format='%H|%ai|%s' --shortstat
 ```
 
 #### 汇报版或同时生成两种
 
 ```bash
-git log --author="<username>" --after="<start_date>" --before="<end_date>" --format='%H|%ai|%s' --stat
+git log --all --author="<username>" --after="<start_date>" --before="<end_date>" --format='%H|%ai|%s' --stat
 ```
 
 当同时生成两种时，统一使用 `--stat`。
@@ -82,6 +82,8 @@ git log --author="<username>" --after="<start_date>" --before="<end_date>" --for
 **重要**：如果 git log 输出为空，提示用户该日期范围内无提交记录。
 
 **数据解析**：将 git log 输出解析为结构化数据，每条 commit 包含 hash、date、message、files_changed、insertions、deletions，以及 file_stats（`--stat` 输出时）。
+
+**去重处理**：由于 `--all` 会遍历所有分支，同一个 commit 可能被多个分支引用而出现多次。解析数据时必须按 commit hash 去重，确保每条记录只保留一份。
 
 ### 第五步：深度分析代码
 
@@ -404,7 +406,7 @@ sequenceDiagram
 
 ### 注意事项
 
-- `git log` 在当前工作目录执行，分析的是用户当前项目
+- `git log --all` 在当前工作目录执行，检索所有分支，分析的是用户当前项目的完整提交历史
 - 如果 `output/` 目录不存在，自动创建
 - **代码片段必须来自实际代码分析**：读取相关源文件获取真实代码，绝不能编造
 - 参考文档放在项目根目录的 `references/` 文件夹中，支持 .md 格式

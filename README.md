@@ -38,7 +38,7 @@ Auto-reads reference docs to learn your style · Bilingual output · One-click i
 | **Code Snippets** | Automatically extract representative code snippets from your repo |
 | **Mermaid Diagrams** | Auto-generate architecture and flow diagrams |
 | **Self-contained** | No external dependencies, no Python required |
-| **Analyze Current Project** | `git log` runs in your current working directory |
+| **Analyze Current Project** | `git log --all` scans all branches in your current working directory |
 
 ---
 
@@ -138,7 +138,7 @@ git-reporter/                   # Tool installer (clone and run setup)
 
 1. **Parse Intent**: Extract report type, date range, user, and language from user input
 2. **Learn from References**: Read documents in the current project's `references/` folder and analyze their style
-3. **Collect Data**: Run `git log` to get commit history and file change details from the current project
+3. **Collect Data**: Run `git log --all` to get commit history and file change details across all branches in the current project
 4. **Deep Analysis**: Read actual source code files in the repo to understand code logic
 5. **Generate Report**: Claude analyzes the data and generates the report content
 6. **Write Output**: Save to the current project's `output/` directory
